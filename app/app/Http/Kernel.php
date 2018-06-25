@@ -35,6 +35,9 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+
+            // custom
+            \App\Http\Middleware\Custom\ForceHttps::class,
         ],
 
         // 'api' => [
@@ -62,5 +65,6 @@ class Kernel extends HttpKernel
 
         // custom
         'is_org_owner' => \App\Http\Middleware\Custom\IsOrgOwner::class,
+        'force_https' => \App\Http\Middleware\Custom\ForceHttps::class,
     ];
 }
