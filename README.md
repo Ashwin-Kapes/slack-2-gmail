@@ -19,6 +19,7 @@ And set the following variables:
 ENV=prod
 APP_ENV=prod
 APP_DEBUG=false
+LOGGING_CHANNEL=syslog
 
 # start app from app/ directory
 APP_FOLDER=app
