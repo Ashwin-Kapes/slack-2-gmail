@@ -35,9 +35,16 @@ ENABLE_METRICS=true
 # create credentials here: https://console.developers.google.com/apis/credentials
 GOOGLE_OAUTH2_CLIENT_ID=xxxxxxxxxxxxxxxxxxxxxxxxxxxx
 GOOGLE_OAUTH2_CLIENT_SECRET=xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+# workers
+CC_WORKER_COMMAND_0=cd app/ && php artisan slack:sync:orgs
+CC_WORKER_COMMAND_1=cd app/ && php artisan slack:sync:channels
+CC_WORKER_RESTART=always
 ```
 
 ### Workers
+
+On CleverCloud, This is run is the same VM, thanks to CC_WORKERS_* environment variables.
 
 ```
 $ php artisan slack:sync:orgs
