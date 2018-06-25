@@ -11,12 +11,6 @@
 |
 */
 
-if (env('APP_ENV') === 'prod') {
-    URL::forceSchema('https');
-}
-
-
-
 Route::get('/', function () {
     return view('pages.app');
 });
