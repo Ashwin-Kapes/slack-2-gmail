@@ -1,0 +1,42 @@
+version: '3'
+
+services:
+  app:
+    build: app/
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./app:/app
+    env_file: ./app/.env.docker
+
+  # for building frontend static files
+  # fig exec build rm -rf node_modules/ && fig exec build yarn
+  build:
+    image: node:10
+    volumes:
+      - ./app:/app
+    working_dir: /app
+    command: npm run watch
+
+  job-sync-orgs:
+    build: app/
+    volumes:
+      - ./app:/app
+    env_file: ./app/.env.docker
+    command: php artisan slack:sync:orgs
+  job-sync-channels:
+    build: app/
+    volumes:
+      - ./app:/app
+    env_file: ./app/.env.docker
+    command: php artisan slack:sync:channels
+
+  postgres:
+    image: postgres:10.4
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./schema:/docker-entrypoint-initdb.d
+    environment:
+      - POSTGRES_USER=s2g
+      - POSTGRES_PASSWORD=s2g

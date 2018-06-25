@@ -1,0 +1,39 @@
+// Bootstrap
+// @import '~bootstrap/scss/bootstrap';
+@import './mountain-theme';
+.navbar-fixed-top {
+  background: none;
+}
+
+.navbar-default {
+  box-shadow: none;
+}
+
+#main {
+  min-height: 70vh;
+}
+
+.margin-top-50 {
+  margin-top: 50px;
+}
+
+.slack-org-item {
+  margin: 20px auto;
+}
+
+.slack-org-item img {
+  margin-right: 20px;
+}
+
+.slack-org-item a {
+  padding-left: 10px;
+  font-size: 22px;
+}
+
+.slack-channel-item input[type="checkbox"] {
+  margin-right: 30px;
+}
+
+body>footer a {
+  text-decoration: underline;
+}

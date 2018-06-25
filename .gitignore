@@ -1,0 +1,26 @@
+
+# common
+*~
+*.log
+*.sqlite
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+
+
+# php
+
+
+# laravel
+/node_modules
+/public/storage
+/public/hot
+/vendor
+/storage/*.key
+Homestead.json
+Homestead.yaml
+.idea/
+/*.iml
