@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'default' => 'stderr',
+    'default' => getenv('LOGGING_CHANNEL', 'stderr'),
 
     /*
     |--------------------------------------------------------------------------
