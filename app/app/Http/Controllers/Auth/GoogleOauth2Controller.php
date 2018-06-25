@@ -45,7 +45,6 @@ class GoogleOauth2Controller extends Controller
             $google = Socialite::driver('google')
                 ->stateless()
                 ->user();
-            Log::info((array)$google);
         } catch (\Exception $e) {
             Log::error($e);
             throw new BadRequestHttpException('Failed to connect, please retry.');
