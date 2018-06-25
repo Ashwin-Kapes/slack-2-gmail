@@ -44,7 +44,7 @@ $ php artisan slack:sync:orgs
 $ php artisan slack:sync:channels
 ```
 
-Run them only once!! Does not support concurrent jobs.
+Run them only once!! Slack2Gmail does not support concurrent job executions.
 
 ## Contribute
 
