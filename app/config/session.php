@@ -1,5 +1,12 @@
 <?php
 
+function without_scheme_url($url)
+{
+	$url = str_replace('http://', '', $url);
+	$url = str_replace('https://', '', $url);
+	return $url;
+}
+
 return [
 
     /*
@@ -148,7 +155,7 @@ return [
     |
     */
 
-    'domain' => getenv('ENV') == 'prod' ? getenv('APP_URL') : NULL,
+    'domain' => getenv('ENV') == 'prod' ? without_scheme_url(getenv('APP_URL')) : NULL,
 
     /*
     |--------------------------------------------------------------------------

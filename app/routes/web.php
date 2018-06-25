@@ -11,11 +11,12 @@
 |
 */
 
+if (config('app.env') == 'prod')
+    \URL::forceScheme('https');
+
 Route::get('/', function () {
     return view('pages.app');
 });
-
-
 
 Route::group(['middleware' => ['guest']], function () {
     Route::get('/login', function () {

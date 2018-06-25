@@ -66,7 +66,7 @@
             <p>
                 For your own security, don't forget to <a href="https://api.slack.com/custom-integrations/legacy-tokens" target="_blank">review active tokens</a> in the Slack API console.
                 <br/><br/>
-                Privacy does matter, mostly for corporate things! 😘
+                Privacy does matter, especially for corporate things! 😘
             </p>
         </div>
     </div>
