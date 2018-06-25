@@ -18,6 +18,7 @@ And set the following variables:
 ```
 ENV=prod
 APP_ENV=prod
+APP_DEBUG=false
 
 # start app from app/ directory
 APP_FOLDER=app
@@ -33,4 +34,19 @@ ENABLE_METRICS=true
 # create credentials here: https://console.developers.google.com/apis/credentials
 GOOGLE_OAUTH2_CLIENT_ID=xxxxxxxxxxxxxxxxxxxxxxxxxxxx
 GOOGLE_OAUTH2_CLIENT_SECRET=xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+```
+
+### Workers
+
+```
+$ php artisan slack:sync:orgs
+$ php artisan slack:sync:channels
+```
+
+Run them only once!! Does not support concurrent jobs.
+
+## Contribute
+
+```
+$ docker-compose up -d
 ```
