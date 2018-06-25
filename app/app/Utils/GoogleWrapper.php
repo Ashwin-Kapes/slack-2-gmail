@@ -33,6 +33,7 @@ class GoogleWrapper {
     public function __construct($user)
     {
         $this->user = $user;
+
         $this->client = new Client([
             'application_name' => 'Slack2Gmail',
             'client_id' => config('services.google.client_id'),
@@ -49,14 +50,7 @@ class GoogleWrapper {
             'token_type' => 'Bearer',
         ]);
 
-        if ($this->client->isAccessTokenExpired()) {
-            Log::warning("Google access_token expired for $user->email");
-            $this->client->fetchAccessTokenWithRefreshToken($user->gmail_refresh_token);
-            $newToken = $this->client->getAccessToken();
-            $user->gmail_access_token = $newToken['access_token'];
-            $user->gmail_expires_at = $newToken['expires_in'] + time();
-            $user->save();
-        }
+        $this->check_token_expired();
 
         $this->google_client = $this->client->getClient();
         $this->gmail_service = $this->client->make('gmail');
@@ -72,13 +66,29 @@ class GoogleWrapper {
         }
     }
 
+    public function check_token_expired()
+    {
+        if ($this->client->isAccessTokenExpired()) {
+            Log::warning("Google access_token expired for $this->user->email");
+            $this->client->fetchAccessTokenWithRefreshToken($this->user->gmail_refresh_token);
+            $newToken = $this->client->getAccessToken();
+            $this->user->gmail_access_token = $newToken['access_token'];
+            $this->user->gmail_expires_at = $newToken['expires_in'] + time();
+            $this->user->save();
+        }
+    }
+
     public function get_user_infos()
     {
+        $this->check_token_expired();
+
         return $this->oauth2_service->userinfo->get();
     }
 
     private function get_label_by_name($name)
     {
+        $this->check_token_expired();
+
         if ($this->labels == NULL)
             $this->labels = $this->gmail_service->users_labels->listUsersLabels('me');
         foreach ($this->labels as $label)
@@ -89,6 +99,8 @@ class GoogleWrapper {
 
     public function find_or_create_label($name)
     {
+        $this->check_token_expired();
+
         $label = $this->get_label_by_name($name);
         if ($label != NULL)
             return $label;
@@ -103,6 +115,8 @@ class GoogleWrapper {
 
     public function insert_email($org, $channel, $message)
     {
+        $this->check_token_expired();
+
         $label = $this->find_or_create_label(config('services.gmail.label'));
 
         $to = 'channel.' . strtolower($channel->channel_id) . config('services.gmail.address_suffix');
