@@ -10,7 +10,7 @@ WIP
 ### Environment variables
 
 ```
-$ cat app/.env.docker
+$ cat app/.env.docker.dist
 ```
 
 And set the following variables:
