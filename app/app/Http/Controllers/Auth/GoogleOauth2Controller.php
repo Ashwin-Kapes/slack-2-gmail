@@ -51,10 +51,6 @@ class GoogleOauth2Controller extends Controller
             throw new BadRequestHttpException('Failed to connect, please retry.');
         }
 
-        // $token = $user->token;
-        // $refreshToken = $user->refreshToken; // not always provided
-        // $expiresIn = $user->expiresIn;
-
         try {
             $user = $this->findOrCreateUser($google);
             Auth::loginUsingId($user->id);
