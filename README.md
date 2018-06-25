@@ -58,3 +58,15 @@ Run them only once!! Slack2Gmail does not support concurrent job executions.
 ```
 $ docker-compose up -d
 ```
+
+## Todo
+
+- better error management
+- transactional emails: welcome, nurturing...
+- transactional emails to announce new channel in a slack org (or even channel deletion ?)
+- export private messages
+- display real name in @from email field
+- export messages with attachment (and even files ?)
+- insert gmail messages with thread ids (by channel)
+- for app owner: Push notifications into Slack for new user, new org linked...
+- for app owner: prometheus monitoring + alerting
