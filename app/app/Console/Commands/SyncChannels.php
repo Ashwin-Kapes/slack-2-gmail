@@ -120,8 +120,8 @@ class SyncChannels extends Command
             Log::info($e);
         }
 
-        // room is empty
-        if ($channel->sync_cursor == 0) {
+        // room is empty or no message to fetch
+        if ($latest == NULL) {
             $channel->sync_cursor = time();
             $channel->move_scraping_cursor($channel->sync_cursor);
         }
