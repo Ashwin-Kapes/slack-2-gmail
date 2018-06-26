@@ -115,10 +115,14 @@ class SyncChannels extends Command
             }
             while (count($history->messages) == $this->BATCH_SIZE && $history->has_more == true);
         } catch (\Exception $e) {
-            // Exception can happen here when we exceed 10k messages limit
+            // Looks like Exceptions happen here, when we exceed 10k messages limit
             // quick and dirty
             Log::info($e);
         }
+
+        // room is empty
+        if ($channel->sync_cursor == 0)
+            $channel->sync_cursor = time();
 
         return $channel->sync_cursor;
     }
