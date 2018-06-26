@@ -132,7 +132,10 @@ class SyncChannels extends Command
             if (property_exists($message, 'subtype') && $message->subtype == 'bot_message') {
                 $user_type = 'bot';
                 $user_id = $message->bot_id;
-                $username = $message->username;
+                if (property_exists($message, 'username'))
+                    $username = $message->username;
+                else
+                    $username = $message->bot_id;
             } elseif (property_exists($message, 'subtype') == false) {
                 // here, `user` is something like U123456789 -> we should use the real user name !
                 $user_type = 'user';

@@ -73,7 +73,7 @@ class SlackChannel extends Model
         if ($cursor_pos != NULL)
             DB::statement("UPDATE slack_channels SET synced_at = NOW(), sync_cursor = $cursor_pos WHERE id = '$this->id'");
         else
-            DB::statement("UPDATE slack_channels SET synced_at = NOW(), sync_cursor = 0 WHERE id = '$this->id'");
+            DB::statement("UPDATE slack_channels SET synced_at = NOW() WHERE id = '$this->id'");
     }
 
     static function bulk_upsert($user_id, $slack_org_id, $channels) {
