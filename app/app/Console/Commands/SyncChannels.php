@@ -58,7 +58,7 @@ class SyncChannels extends Command
                     $channel->sync_cursor = $this->fetchMessages($org, $user, $channel);
 
                     // move cursor in db
-                    $channel->move_scraping_cursor($channel->cursor_pos);
+                    $channel->move_scraping_cursor($channel->sync_cursor);
                 }
             } catch (\Exception $e) {
                 // catch all motherfucker

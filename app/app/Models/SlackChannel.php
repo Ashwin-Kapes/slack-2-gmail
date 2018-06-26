@@ -55,7 +55,7 @@ class SlackChannel extends Model
         'is_private' => 'boolean',
         'num_members' => 'integer',
         'is_backup_enabled' => 'boolean',
-        'sync_cursor' => 'float',
+        'sync_cursor' => 'real',
         'synced_at' => 'datetime',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',

@@ -75,7 +75,7 @@ CREATE TABLE slack_channels (
     is_private BOOLEAN NOT NULL,
     num_members INTEGER NOT NULL,
     is_backup_enabled BOOLEAN DEFAULT FALSE,  -- ready to scrape
-    sync_cursor FLOAT NOT NULL DEFAULT 0,
+    sync_cursor NUMERIC NOT NULL DEFAULT 0,
     synced_at TIMESTAMP WITH TIME ZONE DEFAULT NULL,
     created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW()
