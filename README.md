@@ -43,7 +43,7 @@ CC_WORKER_RESTART=always
 
 # for persistant sessions after redeploy
 CC_FS_BUCKET=/app/storage/framework/nfs-sessions:bucket-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx-fsbucket.services.clever-cloud.com
-NFS_SESSION_STORAGE=/app/storage/framework/nfs-sessions
+NFS_SESSION_STORAGE=framework/nfs-sessions
 ```
 
 ### Workers
