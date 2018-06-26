@@ -72,7 +72,7 @@ class SyncChannels extends Command
     private function fetchMessages($org, $user, $channel)
     {
         $sw = new SlackWrapper($org->api_key);
-        $gmail = NULL;
+        $gw = NULL;
         try {
             $gw = new GoogleWrapper($user);
         } catch (\Exception $e) {
