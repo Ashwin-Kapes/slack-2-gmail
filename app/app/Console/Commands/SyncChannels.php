@@ -121,8 +121,10 @@ class SyncChannels extends Command
         }
 
         // room is empty
-        if ($channel->sync_cursor == 0)
+        if ($channel->sync_cursor == 0) {
             $channel->sync_cursor = time();
+            $channel->move_scraping_cursor($channel->sync_cursor);
+        }
 
         return $channel->sync_cursor;
     }
