@@ -64,7 +64,7 @@ return [
     |
     */
 
-    'files' => storage_path('framework/sessions'),
+    'files' => storage_path(getenv('NFS_SESSION_STORAGE', 'framework/sessions')),
 
     /*
     |--------------------------------------------------------------------------

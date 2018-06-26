@@ -42,7 +42,8 @@ CC_WORKER_COMMAND_1=cd app/ && php artisan slack:sync:channels
 CC_WORKER_RESTART=always
 
 # for persistant sessions after redeploy
-CC_FS_BUCKET=/app/storage/framework/sessions:bucket-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx-fsbucket.services.clever-cloud.com
+CC_FS_BUCKET=/app/storage/framework/nfs-sessions:bucket-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx-fsbucket.services.clever-cloud.com
+NFS_SESSION_STORAGE=/app/storage/framework/nfs-sessions
 ```
 
 ### Workers
