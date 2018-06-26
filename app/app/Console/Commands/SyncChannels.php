@@ -56,9 +56,6 @@ class SyncChannels extends Command
 
                     // fetch messages
                     $channel->sync_cursor = $this->fetchMessages($org, $user, $channel);
-
-                    // move cursor in db
-                    $channel->move_scraping_cursor($channel->sync_cursor);
                 }
             } catch (\Exception $e) {
                 // catch all motherfucker
@@ -83,38 +80,47 @@ class SyncChannels extends Command
             return $channel->sync_cursor;
         }
 
-        $oldest_msg_fetched = $channel->sync_cursor;
+        $oldest = $channel->sync_cursor;
         $latest = NULL;
 
         // we fetch from the most recent msg until the oldest msg,
         // while has_more is true
-        do {
-            $history = $sw->channel_history($channel->channel_id, $oldest = $channel->sync_cursor, $latest = $latest, $count = $this->BATCH_SIZE);
-            if ($history->ok == false)
-                throw new Exception($history->error);
+        try {
+            do {
+                $history = $sw->channel_history($channel->channel_id, $oldest = $oldest, $latest = $latest, $count = $this->BATCH_SIZE);
+                if ($history->ok == false)
+                    throw new Exception($history->error);
 
-            // we process every messages and forward to gmail
-            foreach ($history->messages as $message) {
-                $msg = $this->parseMessage($message);
+                // we process every messages and forward to gmail
+                foreach ($history->messages as $message) {
+                    $msg = $this->parseMessage($message);
 
-                if ($msg != NULL)
-                    $gw->insert_email($org, $channel, $msg);
+                    if ($msg != NULL)
+                        $gw->insert_email($org, $channel, $msg);
 
-                // move local cursor
-                $latest = $message->ts;
+                    // move local cursor
+                    $latest = $message->ts;
 
-                // move db cursor
-                if ($oldest_msg_fetched < $message->ts)
-                    $oldest_msg_fetched = $message->ts;
+                    // move cursor in db
+                    if ($channel->sync_cursor < $message->ts) {
+                        $channel->sync_cursor = $message->ts;
+                        $channel->move_scraping_cursor($channel->sync_cursor);
+                    }
+
+                }
+
+                // if we still have some messages to read, we sleep few seconds ;-)
+                if ($history->has_more == true)
+                    sleep($this->SLEEP_TIME);
             }
-
-            // if we still have some messages to read, we sleep few seconds ;-)
-            if ($history->has_more == true)
-                sleep($this->SLEEP_TIME);
+            while (count($history->messages) == $this->BATCH_SIZE && $history->has_more == true);
+        } catch (\Exception $e) {
+            // Exception can happen here when we exceed 10k messages limit
+            // quick and dirty
+            Log::info($e);
         }
-        while (count($history->messages) == $this->BATCH_SIZE && $history->has_more == true);
 
-        return $oldest_msg_fetched;
+        return $channel->sync_cursor;
     }
 
     private function parseMessage($message)
