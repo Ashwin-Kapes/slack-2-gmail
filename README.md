@@ -40,6 +40,9 @@ GOOGLE_OAUTH2_CLIENT_SECRET=xxxxxxxxxxxxxxxxxxxxxxxxxxxx
 CC_WORKER_COMMAND_0=cd app/ && php artisan slack:sync:orgs
 CC_WORKER_COMMAND_1=cd app/ && php artisan slack:sync:channels
 CC_WORKER_RESTART=always
+
+# for persistant sessions after redeploy
+CC_FS_BUCKET=/app/storage/framework/sessions:bucket-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx-fsbucket.services.clever-cloud.com
 ```
 
 ### Workers
