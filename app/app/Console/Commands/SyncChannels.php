@@ -160,7 +160,7 @@ class SyncChannels extends Command
     {
         return SlackChannel::with(['user', 'slack_org'])
             ->where('is_backup_enabled', true)
-            ->orderBy("synced_at", "asc")
+            ->orderBy("synced_at", "ASC NULLS FIRST")
             ->first();
     }
 }

@@ -65,7 +65,7 @@ class SyncOrgs extends Command
     private function fetchSlackOrgToSync()
     {
         return SlackOrg::whereNotNull("synced_at")
-            ->orderBy("synced_at", "asc")
+            ->orderBy("synced_at", "ASC NULLS FIRST")
             ->first();
     }
 }
