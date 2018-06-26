@@ -42,6 +42,15 @@ body>header>nav.navbar-fixed-top {
   z-index: 0;
 }
 
+body>header>nav.navbar>.container {
+  padding-left: 80px;
+  padding-right: 80px;
+}
+
 body>header>a {
   z-index: 10;
+}
+
+.navbar-toggle {
+  float: left;
 }
