@@ -60,6 +60,7 @@ class GoogleWrapper {
             $this->get_user_infos();
         } catch (\Exception $e) {
             // @TODO: sent reconnect email !
+            Log::error($e);
             $user->gmail_refresh_token = NULL;
             $user->save();
             throw $e;
@@ -69,7 +70,8 @@ class GoogleWrapper {
     public function check_token_expired()
     {
         if ($this->client->isAccessTokenExpired()) {
-            Log::warning("Google access_token expired for $this->user->email");
+            $email = $this->user->email;
+            Log::warning("Google access_token expired for $email");
             $this->client->fetchAccessTokenWithRefreshToken($this->user->gmail_refresh_token);
             $newToken = $this->client->getAccessToken();
             $this->user->gmail_access_token = $newToken['access_token'];

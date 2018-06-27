@@ -175,6 +175,10 @@ class SyncChannels extends Command
     {
         return SlackChannel::with(['user', 'slack_org'])
             ->where('is_backup_enabled', true)
+            ->whereHas('user', function ($query) {
+                $query->whereNotNull('gmail_refresh_token')
+                    ->where('gmail_refresh_token', '!=', '');
+            })
             ->orderBy("synced_at", "ASC NULLS FIRST")
             ->first();
     }
