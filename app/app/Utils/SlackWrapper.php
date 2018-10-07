@@ -122,4 +122,13 @@ class SlackWrapper {
         return $result;
     }
 
+
+    // users.info => get information about a user id
+    public function users_info($user_id)
+    {
+        return $this->request('get', 'users.info', [
+          'user' => $user_id,
+        ]);
+    }
+
 }
