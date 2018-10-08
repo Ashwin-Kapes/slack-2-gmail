@@ -148,15 +148,20 @@ class SyncChannels extends Command
                 $user_id = $message->user;
                 $username = $message->user;
 
-                // resolve user id into the real name of the user by calling 'users.info' on Slack
-                $users_info = $sw->users_info($message->user);
-                // first look for real_name (that should contain 'Thomas Jane')
-                if (property_exists($users_info, 'real_name')) {
-                    $username = $users_info->real_name;
+                try {
+                    // resolve user id into the real name of the user by calling 'users.info' on Slack
+                    $users_info = $sw->users_info($message->user);
+                    // first look for real_name (that should contain 'Thomas Jane')
+                    if (property_exists($users_info, 'real_name')) {
+                        $username = $users_info->real_name;
+                    }
+                    // then look for name (which contains username)
+                    else if (property_exists($users_info, 'name')) {
+                        $username = $users_info->real_name;
+                    }
                 }
-                // then look for name (which contains username)
-                else if (property_exists($users_info, 'name')) {
-                    $username = $users_info->real_name;
+                catch (\Exception $e) {
+                    Log::info($e);
                 }
             } else {
                 return NULL;
