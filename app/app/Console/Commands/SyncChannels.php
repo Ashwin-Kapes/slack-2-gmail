@@ -143,10 +143,26 @@ class SyncChannels extends Command
                 else
                     $username = $message->bot_id;
             } elseif (property_exists($message, 'subtype') == false) {
-                // here, `user` is something like U123456789 -> we should use the real user name !
+                // here, `user` is something like U123456789 -> resolve this to the real username
                 $user_type = 'user';
                 $user_id = $message->user;
                 $username = $message->user;
+
+                try {
+                    // resolve user id into the real name of the user by calling 'users.info' on Slack
+                    $users_info = $sw->users_info($message->user);
+                    // first look for real_name (that should contain 'Thomas Jane')
+                    if (property_exists($users_info, 'real_name')) {
+                        $username = $users_info->real_name;
+                    }
+                    // then look for name (which contains username)
+                    else if (property_exists($users_info, 'name')) {
+                        $username = $users_info->real_name;
+                    }
+                }
+                catch (\Exception $e) {
+                    Log::info($e);
+                }
             } else {
                 return NULL;
             }
